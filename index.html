@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LCCN Harvester</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1 class="sidebar-title" id="sidebar-title">LCCN Pro</h1>
+                <button class="toggle-btn" id="toggle-btn" title="Toggle Sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#8aadf4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron-icon"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+            </div>
+
+            <div class="nav-group">
+                <button class="nav-btn active" data-target="configure">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    <span class="nav-text">Configure</span>
+                </button>
+                <button class="nav-btn" data-target="harvest">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    <span class="nav-text">Harvest</span>
+                </button>
+                <button class="nav-btn" data-target="dashboard">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                    <span class="nav-text">Dashboard</span>
+                </button>
+                <button class="nav-btn" data-target="help">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    <span class="nav-text">Help</span>
+                </button>
+            </div>
+
+            <div class="sidebar-spacer"></div>
+
+            <div class="status-pill idle" id="status-pill">
+                ● Idle
+            </div>
+
+            <button class="nav-btn theme-btn" id="theme-btn">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <span class="nav-text">Theme: Dark</span>
+            </button>
+            
+            <button class="nav-btn exit-btn">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                <span class="nav-text">Exit</span>
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="content-area">
+            <h2 class="page-title" id="page-title">Configure</h2>
+            
+            <div class="stacked-widget">
+                <!-- Dashboard -->
+                <div class="page" id="page-dashboard">
+                    <p>Dashboard functionality goes here...</p>
+                </div>
+                
+                <!-- Configure (Default Active) -->
+                <div class="page active" id="page-configure">
+                    <div class="config-split">
+                        <!-- Top: Config Settings -->
+                        <div class="config-top">
+                            <div class="panel">
+                                <div class="panel-header">
+                                    <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                    <h3>Profile Settings</h3>
+                                    <select class="form-select flex-grow"><option>Default Settings</option></select>
+                                    <button class="btn btn-secondary">New Profile</button>
+                                    <button class="btn btn-primary" disabled>Save Changes</button>
+                                    <button class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
+                            
+                            <div class="panel">
+                                <div class="panel-header">
+                                    <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    <h3>Harvest Settings</h3>
+                                    <label>Retry Interval</label>
+                                    <input type="number" class="form-input short" value="7"> <span class="helper">days</span>
+                                    <div class="spacer"></div>
+                                    <label>Call Number Selection</label>
+                                    <select class="form-select"><option>LCCN only</option><option>NLMCN only</option><option>Both</option></select>
+                                    <div class="spacer"></div>
+                                    <label>Stop Rule</label>
+                                    <select class="form-select disabled" disabled><option>Stop if either found</option></select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Bottom: Targets List -->
+                        <div class="config-bottom">
+                            <div class="panel h-full flex-col">
+                                <div class="panel-header">
+                                    <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                    <h3>Targets List</h3>
+                                    <div class="spacer"></div>
+                                    <button class="btn btn-primary">Add Target</button>
+                                </div>
+                                <div class="table-container">
+                                    <table class="table">
+                                        <thead><tr><th>Order</th><th>Enabled</th><th>Target Name</th><th>Database</th><th>Protocol</th><th>Actions</th></tr></thead>
+                                        <tbody><tr><td colspan="6" class="text-center text-muted py-4">No targets configured.</td></tr></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Harvest -->
+                <div class="page" id="page-harvest">
+                    <div class="harvest-banner ready" id="harvest-banner">
+                        <h2 class="banner-title" id="harvest-banner-title">READY</h2>
+                    </div>
+                    
+                    <div class="harvest-grid">
+                        <!-- Run Setup -->
+                        <div class="panel">
+                            <h3>Run Setup</h3>
+                            <p class="text-muted text-sm my-2"><b>Active profile: Default Settings</b></p>
+                            <label class="text-muted text-sm">Input file</label>
+                            <div class="file-input-group">
+                                <input type="file" id="hidden-file-input" style="display: none;">
+                                <input type="text" id="harvest-file-input" class="form-input flex-grow" placeholder="No file selected… drag & drop or browse" readonly>
+                                <button class="btn btn-primary" id="harvest-browse-btn">Browse…</button>
+                            </div>
+                            <div class="checkbox-row mt-3">
+                                <input type="checkbox" id="db-only">
+                                <label for="db-only">Database only for this run</label>
+                            </div>
+                        </div>
+                        
+                        <!-- File Statistics -->
+                        <div class="panel">
+                            <h3>File Statistics</h3>
+                            <div class="stats-grid mt-3">
+                                <div class="stat-tile"><div class="stat-val" id="stat-total">—</div><div class="stat-lbl">Total rows</div></div>
+                                <div class="stat-tile"><div class="stat-val" id="stat-valid">—</div><div class="stat-lbl">Valid rows</div></div>
+                                <div class="stat-tile"><div class="stat-val" id="stat-invalid">—</div><div class="stat-lbl">Invalid rows</div></div>
+                                <div class="stat-tile"><div class="stat-val" id="stat-unique">—</div><div class="stat-lbl">Valid (unique)</div></div>
+                                <div class="stat-tile"><div class="stat-val" id="stat-dupes">—</div><div class="stat-lbl">Duplicates</div></div>
+                                <div class="stat-tile"><div class="stat-val" id="stat-size">—</div><div class="stat-lbl">File size</div></div>
+                            </div>
+                        </div>
+                        
+                        <!-- MARC Import -->
+                        <div class="panel flex-col">
+                            <h3>MARC Import</h3>
+                            <div class="marc-stats-row my-2">
+                                <div class="stat-tile small"><div class="stat-val">—</div><div class="stat-lbl">Records Found</div></div>
+                                <div class="stat-tile small"><div class="stat-val">—</div><div class="stat-lbl">Call Numbers</div></div>
+                                <div class="stat-tile small"><div class="stat-val">—</div><div class="stat-lbl">Matched</div></div>
+                                <div class="stat-tile small"><div class="stat-val">—</div><div class="stat-lbl">Unmatched</div></div>
+                            </div>
+                            <div class="drop-zone flex-grow">
+                                Drop .mrc or .xml file here
+                            </div>
+                            <div class="file-input-group mt-2">
+                                <input type="text" class="form-input flex-grow" placeholder="No MARC file selected…" readonly>
+                                <button class="btn btn-primary">Browse…</button>
+                                <button class="btn btn-primary" disabled>Run</button>
+                            </div>
+                        </div>
+                        
+                        <!-- File Preview -->
+                        <div class="panel flex-col">
+                            <div class="panel-header">
+                                <h3>File Preview</h3>
+                                <div class="spacer"></div>
+                                <span class="text-xs text-muted italic" id="preview-filename">No file selected</span>
+                            </div>
+                            <div class="table-container flex-grow mt-2">
+                                <table class="table">
+                                    <thead><tr><th>ISBN</th><th>Status</th></tr></thead>
+                                    <tbody id="preview-tbody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Bar -->
+                    <div class="action-bar panel mt-3">
+                        <div class="action-row">
+                            <div class="status-pill idle inline" id="harvest-status-pill">● Idle</div>
+                            <span class="text-xs">Elapsed:</span>
+                            <span class="activity-value font-mono" id="harvest-elapsed">00:00:00</span>
+                            <div class="spacer"></div>
+                            <span class="text-xs font-bold w-20 text-right" id="harvest-progress-text">0 / 0</span>
+                            <span class="text-xs text-muted italic ml-3" id="harvest-log">Ready…</span>
+                            <button class="btn btn-secondary ml-3" id="btn-pause" style="display:none;">⏸ Pause</button>
+                            <button class="btn btn-danger" id="btn-cancel" style="display:none;">✕ Cancel</button>
+                            <button class="btn btn-primary" id="btn-start" disabled>▶ Start Harvest</button>
+                        </div>
+                        <div class="progress-bar-container mt-2">
+                            <div class="progress-bar idle" id="harvest-progress-bar"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Help -->
+                <div class="page" id="page-help">
+                    <div class="panel">
+                        <h3>Help & Shortcuts</h3>
+                        <p>Keyboard shortcuts and manual will appear here.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

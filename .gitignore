@@ -231,3 +231,4 @@ docs/generated/
 
 # Word documents (kept local only)
 *.docx
+.vercel

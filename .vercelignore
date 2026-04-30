@@ -1,0 +1,8 @@
+requirements.txt
+app_entry.py
+src/
+data/
+config/
+tests/
+backend/
+docs/
