@@ -42,10 +42,7 @@
                 ● Idle
             </div>
 
-            <button class="nav-btn theme-btn" id="theme-btn">
-                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                <span class="nav-text">Theme: Dark</span>
-            </button>
+
             
             <button class="nav-btn exit-btn">
                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
@@ -60,7 +57,52 @@
             <div class="stacked-widget">
                 <!-- Dashboard -->
                 <div class="page" id="page-dashboard">
-                    <p>Dashboard functionality goes here...</p>
+                    <div class="harvest-grid" style="grid-template-rows: auto auto 1fr;">
+                        <!-- Header Bar -->
+                        <div class="action-row" style="grid-column: 1 / -1;">
+                            <div class="status-pill idle inline" id="dash-status-pill">● Idle</div>
+                            <span class="text-muted text-sm ml-3">Last Run: Never</span>
+                            <div class="spacer"></div>
+                            <button class="btn btn-secondary mr-2" disabled>Pause</button>
+                            <button class="btn btn-danger" disabled>Cancel</button>
+                        </div>
+                        
+                        <!-- KPIs -->
+                        <div class="stats-grid" style="grid-column: 1 / -1; grid-template-columns: 1fr 1fr 1fr 1fr;">
+                            <div class="stat-tile" style="border-top: 3px solid var(--pill-running);"><div class="stat-val" id="kpi-processed">0</div><div class="stat-lbl text-muted">PROCESSED</div></div>
+                            <div class="stat-tile" style="border-top: 3px solid var(--pill-success);"><div class="stat-val" id="kpi-successful">0</div><div class="stat-lbl text-muted">SUCCESSFUL</div></div>
+                            <div class="stat-tile" style="border-top: 3px solid var(--pill-error);"><div class="stat-val" id="kpi-failed">0</div><div class="stat-lbl text-muted">FAILED</div></div>
+                            <div class="stat-tile" style="border-top: 3px solid #fab387;"><div class="stat-val" id="kpi-invalid">0</div><div class="stat-lbl text-muted">INVALID</div></div>
+                        </div>
+
+                        <!-- Split Content -->
+                        <div class="panel flex-col">
+                            <div class="panel-header">
+                                <h3 class="banner-title">RESULT FILES</h3>
+                            </div>
+                            <p class="text-muted text-sm my-2">Live results are created fresh for each harvest run.</p>
+                            <button class="btn btn-secondary mt-2" disabled>Open successful</button>
+                            <button class="btn btn-secondary mt-2" disabled>Open failed</button>
+                            <button class="btn btn-secondary mt-2" disabled>Open invalid</button>
+                            <button class="btn btn-secondary mt-2" disabled>Open problem targets</button>
+                            <button class="btn btn-secondary mt-2" disabled>Open linked ISBNs</button>
+                            <div class="spacer my-2"></div>
+                            <button class="btn btn-secondary mt-2 w-full">Browse Database</button>
+                        </div>
+
+                        <div class="panel flex-col">
+                            <div class="panel-header">
+                                <h3 class="banner-title">RECENT RESULTS</h3>
+                            </div>
+                            <div class="table-container mt-2 flex-grow">
+                                <table class="table">
+                                    <thead><tr><th>Time</th><th>ISBN</th><th>Result</th></tr></thead>
+                                    <tbody id="dash-recent-tbody"><tr><td colspan="3" class="text-center text-muted py-4">No recent results</td></tr></tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-secondary mt-2 w-full">Linked ISBNs</button>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Configure (Default Active) -->
@@ -207,9 +249,37 @@
 
                 <!-- Help -->
                 <div class="page" id="page-help">
-                    <div class="panel">
-                        <h3>Help & Shortcuts</h3>
-                        <p>Keyboard shortcuts and manual will appear here.</p>
+                    <div class="panel h-full">
+                        <div class="action-row mb-3">
+                            <svg class="panel-icon mr-2" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                            <h3 style="font-size: 15px;">LCCN Harvester · Help Center</h3>
+                        </div>
+                        <div class="harvest-grid">
+                            <div class="panel flex-col" style="background: rgba(0,0,0,0.15);">
+                                <h3>Keyboard Shortcuts</h3>
+                                <hr class="my-2" style="border-color: rgba(255,255,255,0.1); border-top: none;">
+                                <h4 class="text-muted text-xs mt-2 font-bold" style="letter-spacing: 1px;">GENERAL</h4>
+                                <div class="action-row mt-2"><span class="kbd">Ctrl+B</span><span class="ml-3 text-sm text-muted">Toggle sidebar collapse</span></div>
+                                <div class="action-row mt-2"><span class="kbd">Ctrl+Q</span><span class="ml-3 text-sm text-muted">Quit the application</span></div>
+                                <div class="action-row mt-2"><span class="kbd">Ctrl+R</span><span class="ml-3 text-sm text-muted">Refresh dashboard</span></div>
+                                <h4 class="text-muted text-xs mt-3 font-bold" style="letter-spacing: 1px;">NAVIGATION</h4>
+                                <div class="action-row mt-2"><span class="kbd">Ctrl+1</span><span class="ml-3 text-sm text-muted">Open Configure</span></div>
+                                <div class="action-row mt-2"><span class="kbd">Ctrl+2</span><span class="ml-3 text-sm text-muted">Open Harvest</span></div>
+                                <div class="action-row mt-2"><span class="kbd">Ctrl+3</span><span class="ml-3 text-sm text-muted">Open Dashboard</span></div>
+                                <div class="action-row mt-2"><span class="kbd">Ctrl+4</span><span class="ml-3 text-sm text-muted">Open Help</span></div>
+                            </div>
+                            <div class="panel flex-col" style="background: rgba(0,0,0,0.15);">
+                                <h3>Accessibility</h3>
+                                <div class="action-row mt-2 text-sm text-muted"><span style="color:#22c55e;font-weight:bold;margin-right:10px;">✓</span> Keyboard navigation across all major actions</div>
+                                <div class="action-row mt-2 text-sm text-muted"><span style="color:#22c55e;font-weight:bold;margin-right:10px;">✓</span> Readable contrast and clear status colours</div>
+                                <button class="btn btn-primary mt-3 w-full">View Full Accessibility Statement →</button>
+                                <hr class="my-3" style="border-color: rgba(255,255,255,0.1); border-top: none;">
+                                <h3>Support and Guidance</h3>
+                                <p class="text-muted text-sm my-2">Documentation to support users and guide them through the application.</p>
+                                <button class="btn btn-secondary mt-2 w-full">Open Support and Guidance →</button>
+                                <button class="btn btn-primary mt-2 w-full">Open User Guide →</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

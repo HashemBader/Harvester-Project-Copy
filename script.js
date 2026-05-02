@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const sidebar = document.getElementById("sidebar");
     const toggleBtn = document.getElementById("toggle-btn");
-    const themeBtn = document.getElementById("theme-btn");
     const navBtns = document.querySelectorAll(".nav-btn[data-target]");
     const pages = document.querySelectorAll(".page");
     const pageTitle = document.getElementById("page-title");
@@ -17,19 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Theme Toggle
-    themeBtn.addEventListener("click", () => {
-        const body = document.body;
-        const textSpan = themeBtn.querySelector(".nav-text");
-        
-        if (body.classList.contains("dark-theme")) {
-            body.classList.replace("dark-theme", "light-theme");
-            textSpan.textContent = "Theme: Light";
-        } else {
-            body.classList.replace("light-theme", "dark-theme");
-            textSpan.textContent = "Theme: Dark";
-        }
-    });
+
 
     // Navigation
     navBtns.forEach(btn => {
@@ -77,6 +64,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const harvestLog = document.getElementById('harvest-log');
     const previewTbody = document.getElementById('preview-tbody');
     const harvestElapsed = document.getElementById('harvest-elapsed');
+    
+    // Dashboard Elements
+    const dashStatusPill = document.getElementById('dash-status-pill');
+    const kpiProcessed = document.getElementById('kpi-processed');
+    const kpiSuccessful = document.getElementById('kpi-successful');
+    const kpiFailed = document.getElementById('kpi-failed');
+    const kpiInvalid = document.getElementById('kpi-invalid');
+    const dashRecentTbody = document.getElementById('dash-recent-tbody');
     
     let mockTotalItems = 0;
     let mockProcessed = 0;
@@ -134,6 +129,8 @@ document.addEventListener("DOMContentLoaded", () => {
             statusPill.textContent = '● Running';
             globalStatusPill.style = pStyle;
             globalStatusPill.textContent = '● Running';
+            dashStatusPill.style = pStyle;
+            dashStatusPill.textContent = '● Running';
             
             progressBar.style.backgroundColor = 'var(--pill-running)';
             
@@ -152,6 +149,8 @@ document.addEventListener("DOMContentLoaded", () => {
             statusPill.textContent = '● Completed';
             globalStatusPill.style = pStyle;
             globalStatusPill.textContent = '● Completed';
+            dashStatusPill.style = pStyle;
+            dashStatusPill.textContent = '● Completed';
             
             progressBar.style.backgroundColor = 'var(--pill-success)';
             harvestLog.textContent = "Harvest finished successfully.";
@@ -170,6 +169,8 @@ document.addEventListener("DOMContentLoaded", () => {
             statusPill.textContent = '● Idle';
             globalStatusPill.style = pStyle;
             globalStatusPill.textContent = '● Idle';
+            dashStatusPill.style = pStyle;
+            dashStatusPill.textContent = '● Idle';
             
             progressBar.style.backgroundColor = 'var(--pill-idle)';
             progressBar.style.width = '0%';
@@ -177,6 +178,11 @@ document.addEventListener("DOMContentLoaded", () => {
             progressText.textContent = "0 / 0";
             harvestElapsed.textContent = "00:00:00";
             previewTbody.innerHTML = '';
+            dashRecentTbody.innerHTML = '';
+            kpiProcessed.textContent = "0";
+            kpiSuccessful.textContent = "0";
+            kpiFailed.textContent = "0";
+            kpiInvalid.textContent = "0";
         }
     }
 
@@ -229,14 +235,32 @@ document.addEventListener("DOMContentLoaded", () => {
             
             harvestLog.textContent = `Processed ${fakeIsbn} - ${status}`;
             
+            // Update Dashboard KPIs
+            kpiProcessed.textContent = mockProcessed;
+            if (status === 'Failed') {
+                kpiFailed.textContent = parseInt(kpiFailed.textContent) + 1;
+            } else {
+                kpiSuccessful.textContent = parseInt(kpiSuccessful.textContent) + 1;
+            }
+            
             // Add row to preview table
             const tr = document.createElement('tr');
             tr.innerHTML = `<td>${fakeIsbn}</td><td><span style="color: ${status === 'Failed' ? 'var(--pill-error)' : 'var(--pill-success)'}">${status}</span></td>`;
             previewTbody.prepend(tr);
             
+            // Add row to Dashboard Recent
+            const timeStr = new Date().toLocaleTimeString([], { hour12: false });
+            const dtr = document.createElement('tr');
+            dtr.innerHTML = `<td>${timeStr}</td><td>${fakeIsbn}</td><td><span style="color: ${status === 'Failed' ? 'var(--pill-error)' : 'var(--pill-success)'}">${status}</span></td>`;
+            if (dashRecentTbody.innerHTML.includes('No recent results')) dashRecentTbody.innerHTML = '';
+            dashRecentTbody.prepend(dtr);
+            
             // Limit rows
             if (previewTbody.children.length > 50) {
                 previewTbody.lastElementChild.remove();
+            }
+            if (dashRecentTbody.children.length > 15) {
+                dashRecentTbody.lastElementChild.remove();
             }
             
             if (mockProcessed >= mockTotalItems) {
